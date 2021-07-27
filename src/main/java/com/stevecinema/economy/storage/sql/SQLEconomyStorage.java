@@ -16,12 +16,13 @@ public abstract class SQLEconomyStorage extends EconomyStorage {
     public CompletableFuture<EconomyAccount> loadAccount(UUID holder) {
         return CompletableFuture.supplyAsync(() -> {
             try (Connection connection = getConnection()) {
-                return queryAccount(holder, connection);
+                RelationalEconomyAccount query = queryAccount(holder, connection);
+                if (query != null) return query;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            return new EconomyAccount(this, holder, 0L);
+            return new EconomyAccount(this, holder, 0L, System.currentTimeMillis());
         });
     }
 

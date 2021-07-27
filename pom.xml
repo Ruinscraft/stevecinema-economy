@@ -13,6 +13,7 @@
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
+        <mainClass>com.stevecinema.economy.EconomyPlugin</mainClass>
     </properties>
 
     <repositories>

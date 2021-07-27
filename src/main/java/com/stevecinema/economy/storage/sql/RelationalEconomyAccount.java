@@ -9,8 +9,8 @@ public class RelationalEconomyAccount extends EconomyAccount {
 
     private final int relId;
 
-    public RelationalEconomyAccount(EconomyStorage economyStorage, UUID holder, long balance, int relId) {
-        super(economyStorage, holder, balance);
+    public RelationalEconomyAccount(EconomyStorage economyStorage, UUID holder, long balance, long lastUpdated, int relId) {
+        super(economyStorage, holder, balance, lastUpdated);
         this.relId = relId;
     }
 

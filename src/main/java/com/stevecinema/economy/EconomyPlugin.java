@@ -13,6 +13,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
+
 public class EconomyPlugin extends JavaPlugin {
 
     private EconomyStorage economyStorage;
@@ -33,12 +35,22 @@ public class EconomyPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
+
         String mysqlHost = getConfig().getString("storage.mysql.host");
         int mysqlPort = getConfig().getInt("storage.mysql.port");
         String mysqlDatabase = getConfig().getString("storage.mysql.database");
         String mysqlUsername = getConfig().getString("storage.mysql.username");
         String mysqlPassword = getConfig().getString("storage.mysql.password");
-        economyStorage = new PooledMySQLEconomyStorage(mysqlHost, mysqlPort, mysqlDatabase, mysqlUsername, mysqlPassword);
+        try {
+            economyStorage = new PooledMySQLEconomyStorage(mysqlHost, mysqlPort, mysqlDatabase, mysqlUsername, mysqlPassword);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (economyStorage == null) {
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         accountManager = new EconomyAccountManager(economyStorage);
         silverEconomy = new SilverEconomy(this);
 
@@ -61,7 +73,9 @@ public class EconomyPlugin extends JavaPlugin {
             economyStorage.close();
         }
 
-        accountManager.unloadAll();
+        if (accountManager != null) {
+            accountManager.unloadAll();
+        }
     }
 
 }

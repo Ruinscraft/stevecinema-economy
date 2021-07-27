@@ -11,7 +11,7 @@ public class PooledMySQLEconomyStorage extends MySQLEconomyStorage {
     private HikariConfig config;
     private HikariDataSource dataSource;
 
-    public PooledMySQLEconomyStorage(String host, int port, String database, String username, String password) {
+    public PooledMySQLEconomyStorage(String host, int port, String database, String username, String password) throws SQLException {
         config = new HikariConfig();
         config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
         config.setUsername(username);
@@ -20,6 +20,10 @@ public class PooledMySQLEconomyStorage extends MySQLEconomyStorage {
         config.setMaximumPoolSize(10);
 
         dataSource = new HikariDataSource(config);
+
+        try (Connection connection = getConnection()) {
+            createTables(connection);
+        }
     }
 
     @Override
