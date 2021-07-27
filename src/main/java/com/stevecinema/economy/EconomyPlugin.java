@@ -45,10 +45,10 @@ public class EconomyPlugin extends JavaPlugin {
         getServer().getServicesManager().register(Economy.class, silverEconomy, this, ServicePriority.Highest);
         getServer().getPluginManager().registerEvents(accountManager, this);
 
-        getCommand("balance").setExecutor(new BalanceCommand());
+        getCommand("balance").setExecutor(new BalanceCommand(this));
         getCommand("showbalance").setExecutor(new ShowBalanceCommand(this));
         getCommand("pay").setExecutor(new PayCommand(this));
-        getCommand("ecoadmin").setExecutor(new EcoAdminCommand());
+        getCommand("ecoadmin").setExecutor(new EcoAdminCommand(this));
 
         for (Player player : getServer().getOnlinePlayers()) {
             accountManager.load(player);

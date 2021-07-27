@@ -12,8 +12,6 @@ public class PooledMySQLEconomyStorage extends MySQLEconomyStorage {
     private HikariDataSource dataSource;
 
     public PooledMySQLEconomyStorage(String host, int port, String database, String username, String password) {
-        super(host, port, database, username, password);
-
         config = new HikariConfig();
         config.setJdbcUrl("jdbc:mysql://" + host + ":" + port + "/" + database);
         config.setUsername(username);

@@ -23,12 +23,18 @@ public class EconomyAccount {
 
     public synchronized void deposit(long amount) {
         assert amount > 0;
+        balance += amount;
         economyStorage.saveAccount(this);
+        EconomyLogEntry logEntry = new EconomyLogEntry(this, EconomyLogEntry.Action.D, amount, System.currentTimeMillis());
+        economyStorage.saveLogEntry(logEntry);
     }
 
     public synchronized void withdraw(long amount) {
         assert has(amount);
+        balance -= amount;
         economyStorage.saveAccount(this);
+        EconomyLogEntry logEntry = new EconomyLogEntry(this, EconomyLogEntry.Action.W, amount, System.currentTimeMillis());
+        economyStorage.saveLogEntry(logEntry);
     }
 
     public synchronized boolean has(long amount) {

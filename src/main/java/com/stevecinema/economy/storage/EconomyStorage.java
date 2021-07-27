@@ -9,6 +9,8 @@ public abstract class EconomyStorage {
 
     public abstract CompletableFuture<Void> saveAccount(EconomyAccount account);
 
+    public abstract CompletableFuture<Void> saveLogEntry(EconomyLogEntry logEntry);
+
     public abstract void close();
 
 }
