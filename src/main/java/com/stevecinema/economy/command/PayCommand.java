@@ -54,7 +54,7 @@ public class PayCommand implements CommandExecutor {
             return true;
         }
 
-        if (!economyPlugin.getSilverEconomy().has(target, amount)) {
+        if (!economyPlugin.getSilverEconomy().has(player, amount)) {
             player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + ChatColor.RED + "You do not have that much");
             return true;
         }
