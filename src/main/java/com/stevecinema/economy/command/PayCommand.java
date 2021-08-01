@@ -31,7 +31,12 @@ public class PayCommand implements CommandExecutor {
         Player target = economyPlugin.getServer().getPlayer(args[0]);
 
         if (target == null || !target.isOnline()) {
-            player.sendMessage(ChatColor.RED.toString() + target + " is not online");
+            player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + ChatColor.RED.toString() + target + " is not online");
+            return true;
+        }
+
+        if (player.equals(target)) {
+            player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + ChatColor.RED + "You cannot pay yourself");
             return true;
         }
 
@@ -40,17 +45,17 @@ public class PayCommand implements CommandExecutor {
         try {
             amount = Long.parseLong(args[1].replace(",", ""));
         } catch (NumberFormatException e) {
-            player.sendMessage(ChatColor.RED + "Invalid amount.");
+            player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + ChatColor.RED + "Invalid amount");
             return true;
         }
 
         if (amount < 1 || amount > 1_000_000) {
-            player.sendMessage(ChatColor.RED + "Amount must be between 0 and 1,000,000.");
+            player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + ChatColor.RED + "Amount must be between 0 and 1,000,000");
             return true;
         }
 
         if (!economyPlugin.getSilverEconomy().has(target, amount)) {
-            player.sendMessage(ChatColor.RED + "You do not have that much.");
+            player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + ChatColor.RED + "You do not have that much");
             return true;
         }
 
@@ -69,10 +74,10 @@ public class PayCommand implements CommandExecutor {
         }
 
         if (success) {
-            player.sendMessage(SilverEconomy.SILVER_COLOR + "You have sent " + amount + " silver to " + target.getName());
-            target.sendMessage(SilverEconomy.SILVER_COLOR + " has sent you " + amount + " silver.");
+            player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + "You have sent " + SilverEconomy.SILVER_COLOR + amount + " silver " + ChatColor.RESET + "to " + target.getName());
+            target.sendMessage(EconomyPlugin.MESSAGE_PREFIX + player.getName() + " has sent you " + SilverEconomy.SILVER_COLOR + amount + " silver");
         } else {
-            player.sendMessage(ChatColor.RED + "There was an error while transferring the funds.");
+            player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + ChatColor.RED + "There was an error while transferring the funds.");
         }
 
         return true;

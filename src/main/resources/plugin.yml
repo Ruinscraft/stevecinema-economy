@@ -8,8 +8,10 @@ api-version: 1.16
 commands:
   balance:
     description: Check your balance
+    aliases: [bal]
   showbalance:
     description: Show your balance to the server
+    aliases: [showbal]
   pay:
     description: Give silver to someone else
     aliases: [givesilver]

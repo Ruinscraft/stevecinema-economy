@@ -71,7 +71,6 @@ public class EcoAdminCommand implements CommandExecutor {
         sender.sendMessage(ChatColor.LIGHT_PURPLE + "/ecoadmin check <username>");
         sender.sendMessage(ChatColor.LIGHT_PURPLE + "/ecoadmin withdraw <username> <amount>");
         sender.sendMessage(ChatColor.LIGHT_PURPLE + "/ecoadmin deposit <username> <amount>");
-        sender.sendMessage(ChatColor.LIGHT_PURPLE + "/ecoadmin set <username> <amount>");
     }
 
     private void check(CommandSender sender, EconomyAccount account) {

@@ -20,7 +20,7 @@ public class ShowBalanceCommand implements CommandExecutor {
         if (!(sender instanceof Player player))
             return false;
         SilverEconomy eco = economyPlugin.getSilverEconomy();
-        player.sendMessage(SilverEconomy.SILVER_COLOR + player.getName() + " has " + (long) eco.getBalance(player) + " silver.");
+        player.sendMessage(EconomyPlugin.MESSAGE_PREFIX + player.getName() + " has " + SilverEconomy.SILVER_COLOR + (long) eco.getBalance(player) + " silver");
         return true;
     }
 

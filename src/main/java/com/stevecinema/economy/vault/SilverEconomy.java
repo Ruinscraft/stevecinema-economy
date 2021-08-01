@@ -44,7 +44,7 @@ public class SilverEconomy extends NoBankEconomy {
 
     @Override
     public String currencyNameSingular() {
-        return "silver";
+        return currencyNamePlural();
     }
 
     @Override

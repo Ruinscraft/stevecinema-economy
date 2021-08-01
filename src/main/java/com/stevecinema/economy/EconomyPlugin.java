@@ -9,6 +9,7 @@ import com.stevecinema.economy.storage.EconomyStorage;
 import com.stevecinema.economy.storage.sql.PooledMySQLEconomyStorage;
 import com.stevecinema.economy.vault.SilverEconomy;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,6 +17,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.SQLException;
 
 public class EconomyPlugin extends JavaPlugin {
+
+    public static final String MESSAGE_PREFIX = ChatColor.DARK_PURPLE + "[DR.SILVER] " + ChatColor.RESET;
 
     private EconomyStorage economyStorage;
     private EconomyAccountManager accountManager;
@@ -56,6 +59,7 @@ public class EconomyPlugin extends JavaPlugin {
 
         getServer().getServicesManager().register(Economy.class, silverEconomy, this, ServicePriority.Highest);
         getServer().getPluginManager().registerEvents(accountManager, this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinInfoListener(this), this);
 
         getCommand("balance").setExecutor(new BalanceCommand(this));
         getCommand("showbalance").setExecutor(new ShowBalanceCommand(this));
