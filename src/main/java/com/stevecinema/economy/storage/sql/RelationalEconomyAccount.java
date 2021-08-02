@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class RelationalEconomyAccount extends EconomyAccount {
 
-    private final int relId;
+    private int relId;
 
     public RelationalEconomyAccount(EconomyStorage economyStorage, UUID holder, long balance, long lastUpdated, int relId) {
         super(economyStorage, holder, balance, lastUpdated);
@@ -16,6 +16,10 @@ public class RelationalEconomyAccount extends EconomyAccount {
 
     public int getRelId() {
         return relId;
+    }
+
+    public void setRelId(int relId) {
+        this.relId = relId;
     }
 
 }

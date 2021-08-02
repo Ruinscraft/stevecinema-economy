@@ -17,7 +17,16 @@ public abstract class SQLEconomyStorage extends EconomyStorage {
         return CompletableFuture.supplyAsync(() -> {
             try (Connection connection = getConnection()) {
                 RelationalEconomyAccount query = queryAccount(holder, connection);
-                if (query != null) return query;
+
+                if (query == null) {
+                    RelationalEconomyAccount relationalAccount = new RelationalEconomyAccount(this, holder, 0L, System.currentTimeMillis(), 0);
+                    int relId = insertAccount(relationalAccount, connection);
+                    relationalAccount.setRelId(relId);
+                    return relationalAccount;
+                } else {
+                    return query;
+                }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -33,7 +42,7 @@ public abstract class SQLEconomyStorage extends EconomyStorage {
                 if (account instanceof RelationalEconomyAccount relationalAccount) {
                     updateAccount(relationalAccount, connection);
                 } else {
-                    insertAccount(account, connection);
+                    System.out.println("Could not save economy account: " + account.getHolder());
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
